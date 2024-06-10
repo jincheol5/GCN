@@ -111,7 +111,7 @@ def test():
         "accuracy= {:.4f}".format(acc_test.item()))
     
     # mode save
-    save_path="checkpoint/cora_pygcn_checkpoint"+str(int(acc_test.item()*100))+".pth"
+    save_path="checkpoint/cora_pygcn_checkpoint.pth"
     torch.save({
                 'model_state_dict': model.state_dict(),
                 'optimizer_state_dict': optimizer.state_dict(),
