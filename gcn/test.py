@@ -53,7 +53,7 @@ print(f'Accuracy: {acc:.4f}')
 
 
 # mode save
-save_path="checkpoint/cora_gcn_checkpoint"+str(int(acc))+".pth"
+save_path="checkpoint\cora_gcn_checkpoint"+str(int(acc))+".pth"
 torch.save({
             'model_state_dict': model.state_dict(),
             'optimizer_state_dict': optimizer.state_dict(),
