@@ -3,9 +3,23 @@ import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
 from model import GCN
 from torch_geometric.datasets import Planetoid
+import random
+import numpy as np
+import os
+
+random_seed= 42
+random.seed(random_seed)
+np.random.seed(random_seed)
+os.environ["PYTHONHASHSEED"] = str(random_seed)
+torch.manual_seed(random_seed)
+torch.cuda.manual_seed(random_seed)
+torch.cuda.manual_seed_all(random_seed)
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(False)
+
 
 # Training settings
-random_seed=42
 epochs=200
 learning_rate=0.01
 weight_decay=5e-4
@@ -20,6 +34,19 @@ data = dataset[0].to(device)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
 
+
+# 모델 가중치 초기화
+def weights_init(m):
+    if isinstance(m, GCNConv):
+        torch.manual_seed(random_seed)
+        torch.cuda.manual_seed(random_seed)
+        torch.cuda.manual_seed_all(random_seed)
+        torch.nn.init.xavier_uniform_(m.weight)
+
+model.apply(weights_init)
+
+
+# train
 model.train()
 for epoch in range(epochs):
     optimizer.zero_grad()
@@ -28,6 +55,7 @@ for epoch in range(epochs):
     loss.backward()
     optimizer.step()
 
+# test
 model.eval()
 pred = model(data).argmax(dim=1)
 correct = (pred[data.test_mask] == data.y[data.test_mask]).sum()
