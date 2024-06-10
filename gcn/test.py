@@ -21,7 +21,7 @@ torch.use_deterministic_algorithms(False)
 
 # Training settings
 epochs=200
-learning_rate=0.01
+learning_rate=0.001
 weight_decay=5e-4
 hidden_unit=16
 dropout_rate=0.5
@@ -53,7 +53,7 @@ print(f'Accuracy: {acc:.4f}')
 
 
 # mode save
-save_path="checkpoint/cora_gcn_checkpoint"+str(int(acc))+".pth"
+save_path="checkpoint/cora_gcn_checkpoint"+str(int(acc*100))+".pth"
 torch.save({
             'model_state_dict': model.state_dict(),
             'optimizer_state_dict': optimizer.state_dict(),
