@@ -4,6 +4,8 @@ from __future__ import print_function
 import time
 import argparse
 import numpy as np
+import random
+import os
 
 import torch
 import torch.nn.functional as F
@@ -11,6 +13,20 @@ import torch.optim as optim
 
 from utils import load_data, accuracy
 from models import GCN
+
+
+
+# random seed 
+random_seed= 42
+random.seed(random_seed)
+np.random.seed(random_seed)
+os.environ["PYTHONHASHSEED"] = str(random_seed)
+torch.manual_seed(random_seed)
+torch.cuda.manual_seed(random_seed)
+torch.cuda.manual_seed_all(random_seed)
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(False)
 
 # Training settings
 parser = argparse.ArgumentParser()
