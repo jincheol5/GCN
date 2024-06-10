@@ -20,11 +20,11 @@ torch.use_deterministic_algorithms(False)
 
 
 # Training settings
-epochs=300
-learning_rate=0.001
-weight_decay=5e-4
+epochs=200
+learning_rate=0.005
+weight_decay=0.0005
 hidden_unit=32
-dropout_rate=0.5
+dropout_rate=0.0
 
 dataset = Planetoid(root='/tmp/Cora', name='Cora')
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
