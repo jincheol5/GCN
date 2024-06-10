@@ -21,7 +21,7 @@ torch.use_deterministic_algorithms(False)
 
 # Training settings
 epochs=200
-learning_rate=0.001
+learning_rate=0.01
 weight_decay=5e-4
 hidden_unit=16
 dropout_rate=0.5
