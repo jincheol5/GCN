@@ -35,17 +35,6 @@ data = dataset[0].to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
 
 
-# 모델 가중치 초기화
-def weights_init(m):
-    if isinstance(m, GCNConv):
-        torch.manual_seed(random_seed)
-        torch.cuda.manual_seed(random_seed)
-        torch.cuda.manual_seed_all(random_seed)
-        torch.nn.init.xavier_uniform_(m.weight)
-
-model.apply(weights_init)
-
-
 # train
 model.train()
 for epoch in range(epochs):
