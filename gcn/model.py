@@ -22,8 +22,8 @@ from layers import GraphConvolution
 class GCN(torch.nn.Module):
     def __init__(self,input_dim,hidden_dim,output_dim):
         super().__init__()
-        self.GraphConvolution = GCNConv(input_dim, hidden_dim)
-        self.GraphConvolution = GCNConv(hidden_dim, output_dim)
+        self.conv1 = GraphConvolution(input_dim, hidden_dim)
+        self.conv2 = GraphConvolution(hidden_dim, output_dim)
 
     def forward(self, data):
         x, edge_index = data.x, data.edge_index
