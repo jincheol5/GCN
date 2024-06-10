@@ -23,7 +23,7 @@ torch.use_deterministic_algorithms(False)
 epochs=200
 learning_rate=0.01
 weight_decay=5e-4
-hidden_unit=16
+hidden_unit=32
 dropout_rate=0.5
 
 dataset = Planetoid(root='/tmp/Cora', name='Cora')
