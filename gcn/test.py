@@ -20,16 +20,16 @@ torch.use_deterministic_algorithms(False)
 
 
 # Training settings
-epochs=200
+epochs=300
 learning_rate=0.01
 weight_decay=5e-4
-hidden_layer_feature=16
+hidden_unit=16
 dropout_rate=0.5
 
 dataset = Planetoid(root='/tmp/Cora', name='Cora')
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-model = GCN(dataset.num_node_features,hidden_layer_feature,dataset.num_classes).to(device)
+model = GCN(dataset.num_node_features,hidden_unit,dataset.num_classes).to(device)
 data = dataset[0].to(device)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
@@ -50,3 +50,16 @@ pred = model(data).argmax(dim=1)
 correct = (pred[data.test_mask] == data.y[data.test_mask]).sum()
 acc = int(correct) / int(data.test_mask.sum())
 print(f'Accuracy: {acc:.4f}')
+
+
+# mode save
+save_path="checkpoint/cora_gcn_checkpoint"+str(int(acc))+".pth"
+torch.save({
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'epoch': epochs,
+            'learning_rate':learning_rate,
+            'weight_decay':weight_decay,
+            'hidden_unit':hidden_unit,
+            'dropout_rate':dropout_rate
+            }, save_path)
