@@ -120,3 +120,16 @@ print("Total time elapsed: {:.4f}s".format(time.time() - t_total))
 
 # Testing
 test()
+
+
+# mode save
+save_path="checkpoint/cora_pygcn_checkpoint"+str(int(acc*100))+".pth"
+torch.save({
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'epoch': epochs,
+            'learning_rate':learning_rate,
+            'weight_decay':weight_decay,
+            'hidden_unit':hidden_unit,
+            'dropout_rate':dropout_rate
+            }, save_path)
