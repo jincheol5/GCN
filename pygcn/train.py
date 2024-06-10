@@ -109,6 +109,18 @@ def test():
     print("Test set results:",
         "loss= {:.4f}".format(loss_test.item()),
         "accuracy= {:.4f}".format(acc_test.item()))
+    
+    # mode save
+    save_path="checkpoint/cora_pygcn_checkpoint"+str(int(acc_test.item()*100))+".pth"
+    torch.save({
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'epoch': 200,
+                'learning_rate':0.01,
+                'weight_decay':5e-4,
+                'hidden_unit':16,
+                'dropout_rate':0.5
+                }, save_path)
 
 
 # Train model
@@ -122,14 +134,3 @@ print("Total time elapsed: {:.4f}s".format(time.time() - t_total))
 test()
 
 
-# mode save
-save_path="checkpoint/cora_pygcn_checkpoint"+str(int(acc*100))+".pth"
-torch.save({
-            'model_state_dict': model.state_dict(),
-            'optimizer_state_dict': optimizer.state_dict(),
-            'epoch': epochs,
-            'learning_rate':learning_rate,
-            'weight_decay':weight_decay,
-            'hidden_unit':hidden_unit,
-            'dropout_rate':dropout_rate
-            }, save_path)
